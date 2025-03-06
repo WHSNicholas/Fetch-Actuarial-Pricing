@@ -99,7 +99,7 @@ The difficulties we faced when deciding which model to use were the trade-offs b
 
 However, our final model is an attempt to retain the general structure of the GLM, while being able to utilise GBMs and their performance improvements.  We used the residuals of the GAM for severity and frequency as the response of the GBM, and trained XGBoost to predict the residuals. The idea was to use the GAM to capture the overarching effects of the data and being able to retain interpretability, while using the GBM to reduce the unexplained variance in the data. This resulted in further RMSE improvements for residual frequency (0.8445) and residual severity (421.80).
 
-![Alt text](Graphs/fig6.png)
+![Alt text](Graphs/fig7.png)
 
 ## 4. Results and Discussion  
 
