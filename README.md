@@ -34,7 +34,7 @@ To capture the inherent risks in dog breeds, we mapped breed characteristics to 
 
 An example of a canine risk engineered feature is age_difference, which measures the difference between owner age and pet age (converted to human years, see Appendix 8.2). Older pets face higher health risks, while younger pets with older owners may face risks risk due to decreased owner mobility resulting in decreased pet care quality (Bethesda Senior Living Community 2023). Figure 1 supports this, showing slight upticks in claim frequency and severity at either extremes of age differences.
 
-![Alt text](Graphs and Figures/EDA plots for age_difference.png)
+![Alt text](Graphs_and_Figures/EDA_plots_for_age_difference.png)
 
 The most significant canine risk predictor in our final models was avg_weight_kg. This is supported by Kraus et al. (2013), who found that larger dog breeds had accelerated aging and faced earlier health risks, such as neoplasia. Other significant factors included number_of_breeds and breed_trait which captured breed genetic diversity. Inbreeding, commonly seen in purebreds, increases disease risk (i.e., brachycephalic syndrome), compared to mixed breeds (Bannasch et al. 2021). Breed groups created by k-means clustering also proved significant as it informed claims risk profile patterns.
 
