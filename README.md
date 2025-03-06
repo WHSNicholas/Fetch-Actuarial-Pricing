@@ -34,18 +34,18 @@ To capture the inherent risks in dog breeds, we mapped breed characteristics to 
 
 An example of a canine risk engineered feature is age_difference, which measures the difference between owner age and pet age (converted to human years, see Appendix 8.2). Older pets face higher health risks, while younger pets with older owners may face risks risk due to decreased owner mobility resulting in decreased pet care quality (Bethesda Senior Living Community 2023). Figure 1 supports this, showing slight upticks in claim frequency and severity at either extremes of age differences.
 
-![Alt text](Graphs_and_Figures/EDA_plots_for_age_difference.png)
+![Alt text](Graphs/fig1.png)
 
 The most significant canine risk predictor in our final models was avg_weight_kg. This is supported by Kraus et al. (2013), who found that larger dog breeds had accelerated aging and faced earlier health risks, such as neoplasia. Other significant factors included number_of_breeds and breed_trait which captured breed genetic diversity. Inbreeding, commonly seen in purebreds, increases disease risk (i.e., brachycephalic syndrome), compared to mixed breeds (Bannasch et al. 2021). Breed groups created by k-means clustering also proved significant as it informed claims risk profile patterns.
 
 #### 2.2.2. Owner Risk  
 Our factor selection analysis showed that LGA groups were highly significant across both claim frequency and severity. This highlights the correlation between geographic location and key demographic, socioeconomic and lifestyle factors that play a role in determining pet ownership behavior. It was shown that higher severity claims largely came from more urban LGA’s, such as LGA Group 8 (Figure 2) whilst rural LGA’s, such as LGA Group 7 (Figure 2) typically had lower severity. Urban LGA’s also had lower claim frequency highlighting the impact of factors such as access to advanced veterinary care and differences in pet exposure to outdoor hazards. (Neal and Greenberg, 2022) 
 
-![Alt text](Graphs and Figures/LGA mapped by LGA Group.png)
+![Alt text](Graphs/fig2.png)
 
 The ideal family and household variables were created by taking the interaction between factors obtained from ‘ABS Socioeconomic – Family and Community’ data. Family_Ideal assumes that the ‘ideal’ family consists of middle-aged owners who are married, have a purebred dog and are a small family whilst the ideal household is a family that consists of more than 3 people, owns the property and has at least 2 cars. These factors capture key aspects of family stability, pet care responsibility, and financial capacity, which are aligned with trends in pet ownership preferences and pet-related spending habits. Full graphs of this factor can be found in Appendix 8.3.2. 
 
-![Alt text](Graphs and Figures/Average Income, Claim Frequency and Claim Severity by LGA in Greater Sydney.png)
+![Alt text](Graphs/fig3.png)
 
 Three income measurements were considered: income by LGA, by age and a combined weighted income. Whilst the LGA data was granular enough to map onto our dataset directly, further calculations were required for income by age. From the distribution of age and income obtained by ABS data, a log-normal extrapolation was used to predict income given age. However, due to the lack of granular age data and the strong assumptions used in the calculation, income by LGA was the most significant variable. Income had a positive correlation with frequency and severity, reflecting that pet owners with higher income have less price sensitivity and will not avoid treatment based on cost. (Appendix 8.3.2), (Park, Gruen and Royal, 2021) This result is evident in Figures 3, 4 and 5 in which higher income LGA’s, which are largely urban LGA’s, are matched with higher frequency and severity claims in comparison to lower income areas. 
 
@@ -53,9 +53,12 @@ Three income measurements were considered: income by LGA, by age and a combined 
 Our final factor type is environmental. These were mapped by postcode, SA3 or raster values where available for maximal accuracy. Two of our environmental factors are detailed below. Australia-wide plots of these factors can be found in Appendix 8.3.3, while choice areas have been highlighted in the main report.
 
 From the ABS we extracted 'Total protected areas %' representing the total proportion of an SA consisting of protected areas (spaces ‘set aside for conservation and managed by the NSW National Parks and Wildlife Service’). We joined SA3 to postcode using an ABS mapping file, and for postcodes which fell across more than one SA3, we initially assigned the SA3 with the maximum allocation. After further consideration, a more accurate weighted average of protected_area was taken from all the SA3s making up a postcode. As an introduced species, domestic dogs are known to harm native wildlife. From our EDA, we have deduced that this relationship goes both ways - a higher proportion of protected areas within a postcode will increase the likelihood and severity of claims. In fact, a 1998 study by Mirtschin et al. estimated 6,200 dog-snake bite cases reported annually in Australia. This frequency has likely increased as the Australian population inflates and our living spaces overlap increasingly with the native habitats of wildlife. With antivenom alone costing a minimum of $1,000 in Australia and other medical fees easily bringing a snakebite total per patient to $4,000-6,000, (Kelly, 2020), this risk also poses significant loss potential. The proportion of protected areas within a postcode can thus act as a proxy for wildlife driven claims, increasing both the probability and severity of a claim. In Figure 4, a positive correlation can be observed with claim frequency in the more rural Victorian areas. This matches our hypotheses on the underlying risks - [snake]bites are more prominent in rural (78% incidence) than urban areas (22% incidence) (VetTriage, 2024). 
-![Alt text](Graphs and Figures/Protected area % and Claim Frequency by LGA in VIC.png)
+
+![Alt text](Graphs/fig4.png)
+
 Temperature was another significant environmental factor, proxying for several different underlying risks. Average annual temperature was available from the Bureau of Meteorology at raster level to map onto our postcode data. While this is a non-traditional factor for pet insurance, the exacerbation of extreme heatwaves in Australia due to climate change places increasing weight on climactic variables such as these. Most dogs prefer temperatures under 32oC, with older, overweight, or thick coated dogs particularly vulnerable to heat stress. (Hall et al., 2020).  Notably, while proxying for health risks, temperature by location can strengthen prediction for other risks such as snakebites and zoonotic diseases like ticks (Berry, 2021), both significantly more active in warmer temperatures. Figure 5 displays the average temperature and claim frequency in New South Wales. Higher inland and coastal temperatures visibly correlate with higher claim frequency along the border.
-![Alt text](Graphs and Figures/Mean annual tempterature and Claim Frequency by LGA in NSW.png)
+
+![Alt text](Graphs/fig5.png)
 
 
 ## 3. Model Development and Validation  
@@ -96,7 +99,7 @@ The difficulties we faced when deciding which model to use were the trade-offs b
 
 However, our final model is an attempt to retain the general structure of the GLM, while being able to utilise GBMs and their performance improvements.  We used the residuals of the GAM for severity and frequency as the response of the GBM, and trained XGBoost to predict the residuals. The idea was to use the GAM to capture the overarching effects of the data and being able to retain interpretability, while using the GBM to reduce the unexplained variance in the data. This resulted in further RMSE improvements for residual frequency (0.8445) and residual severity (421.80).
 
-![Alt text](Graphs and Figures/Model Prediction Pipeline.png)
+![Alt text](Graphs/fig6.png)
 
 ## 4. Results and Discussion  
 
