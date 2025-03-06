@@ -1,4 +1,4 @@
-# Final Report
+# Fetch Actuarial Pricing Report
 
 ## 1. Executive Summary
 Australia’s pet insurance industry is experiencing rapid growth at 14% per annum yet has significantly lower market penetration than other countries (Konstantinidis and Bu 2024). This reflects the market’s immaturity and the potential to develop a more accurate pricing model that truly captures pet health risks. There is also currently a lack of comprehensive data on pet risk factors, leading to potential discrepancies between anticipated and actual claims (McCoy et al. 2023). 
